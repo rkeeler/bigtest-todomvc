@@ -4,7 +4,6 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const environment = process.env.NODE_ENV || "development";
-console.log("environment = ", environment);
 const isDev = environment === "development";
 const isProd = environment === "production";
 const isTest = environment === "testing";
