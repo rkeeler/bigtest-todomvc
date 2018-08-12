@@ -27,7 +27,12 @@ class TodoInteractor {
     toggle: clickable(".toggle"),
     delete: clickable(".destroy"),
     todoText: text("label"),
-    isCompleted: property(".toggle", "checked")
+    isCompleted: property(".toggle", "checked"),
+    doubleClick: triggerable("label", "dblclick"),
+    fillInput: fillable(".edit"),
+    pressEnter: triggerable(".edit", "keydown", {
+      keyCode: 13
+    })
   });
 
   clickFilter(filter) {

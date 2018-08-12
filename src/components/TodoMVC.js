@@ -25,7 +25,7 @@ export default class TodoMVC_Component extends PureComponent {
     let { store } = this.state;
 
     return (
-      <div>
+      <div className="todoapp">
         <header className="header">
           <h1>Todos</h1>
           <TodoTextInput

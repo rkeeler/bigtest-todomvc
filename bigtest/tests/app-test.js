@@ -11,91 +11,57 @@ describe("TodoMVC BigTest example", () => {
     await setupApplicationForTesting();
   });
 
-  it("has two initial todos", () => {
-    expect(TodoApp.todoCount).to.equal(2);
-  });
-
-  it("has the all filter selected first", () => {
-    expect(TodoApp.activeFilter).to.equal("All");
-  });
-
-  describe("entering a todo", () => {
+  describe("update BigTest install progress", function() {
     beforeEach(async () => {
-      await TodoApp.fillTodo("My new todo").submitTodo();
-    });
+      let completed = new Array(6).fill(null);
 
-    it("increases the todo list count", () => {
-      expect(TodoApp.todoCount).to.equal(3);
-    });
-
-    describe("deleting the newly entered todo", () => {
-      beforeEach(async () => {
-        await TodoApp.todoList(2).delete();
+      completed.forEach(async (item, index) => {
+        await TodoApp.todoList(index).toggle();
       });
 
-      it("reduces the todo count", () => {
-        expect(TodoApp.todoCount).to.equal(2);
-      });
-
-      it("deletes the right todo", () => {
-        expect(TodoApp.todoList(0).todoText).to.equal(
-          "Import app in `bigtest/helpers/setup-app.js`"
-        );
-        expect(TodoApp.todoList(1).todoText).to.equal(
-          "Update bundler entry in test mode"
-        );
-      });
-    });
-  });
-
-  describe("completing a todo", () => {
-    beforeEach(async () => {
-      await TodoApp.todoList(0).toggle();
-    });
-
-    it("toggles to completed", () => {
-      expect(TodoApp.todoList(0).isCompleted).to.equal(true);
-    });
-  });
-
-  describe("clicking the completed filter", () => {
-    beforeEach(async () => {
-      await TodoApp.clickFilter("Complete");
-    });
-
-    it("filters to one todo", () => {
-      expect(TodoApp.todoCount).to.equal(1);
-    });
-
-    it("has the right todo displayed", () => {
-      expect(TodoApp.todoList(0).todoText).to.equal(
-        "Update bundler entry in test mode"
-      );
-    });
-  });
-
-  describe("clicking the active filter", () => {
-    beforeEach(async () => {
       await TodoApp.clickFilter("Active");
     });
 
-    it("filters to one todo", () => {
-      expect(TodoApp.todoCount).to.equal(1);
+    it("has four todos left", () => {
+      expect(TodoApp.todoCount).to.equal(4);
     });
 
-    it("has the right todo displayed", () => {
-      expect(TodoApp.todoList(0).todoText).to.equal(
-        "Import app in `bigtest/helpers/setup-app.js`"
-      );
+    it("has the active filter selected", () => {
+      expect(TodoApp.activeFilter).to.equal("Active");
     });
 
-    describe("clicking the all filter", () => {
+    describe("adding the final todos with a typo", function() {
       beforeEach(async () => {
-        await TodoApp.clickFilter("All");
+        await TodoApp.fillTodo("Fill in your interactor")
+          .submitTodo()
+          .fillTodo("rite tests")
+          .submitTodo();
       });
 
-      it("filters to one todo", () => {
-        expect(TodoApp.todoCount).to.equal(2);
+      it("increases the todo count", function() {
+        expect(TodoApp.todoCount).to.equal(6);
+      });
+
+      it("appends to the list", function() {
+        expect(TodoApp.todoList(4).todoText).to.equal(
+          "Fill in your interactor"
+        );
+        expect(TodoApp.todoList(5).todoText).to.equal("rite tests");
+      });
+
+      describe("fixing the typo", () => {
+        beforeEach(async () => {
+          await TodoApp.todoList(5)
+            .doubleClick()
+            .todoList(5)
+            .fillInput("Write tests")
+            .todoList(5)
+            .pressEnter();
+        });
+
+        it("properly edits the todo item", function() {
+          expect(TodoApp.todoList(5).todoText).to.equal("Write tests");
+        });
       });
     });
   });
