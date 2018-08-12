@@ -14,6 +14,7 @@ class TodoInteractor {
   titleText = text("h1");
   fillTodo = fillable(".new-todo");
   todoCount = count(".todo-list li");
+  completedCount = count(".todo-list .completed");
   todoCountText = text(".todo-count");
   activeFilter = text(".filters .selected");
   clickToggleAll = clickable(".toggle-all");

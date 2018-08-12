@@ -11,7 +11,7 @@ describe("TodoMVC BigTest example", () => {
     await setupApplicationForTesting();
   });
 
-  describe("update BigTest install progress", function() {
+  describe("update BigTest install progress", () => {
     beforeEach(async () => {
       let completed = new Array(6).fill(null);
 
@@ -30,7 +30,7 @@ describe("TodoMVC BigTest example", () => {
       expect(TodoApp.activeFilter).to.equal("Active");
     });
 
-    describe("adding the final todos with a typo", function() {
+    describe("adding the final todos with a typo", () => {
       beforeEach(async () => {
         await TodoApp.fillTodo("Fill in your interactor")
           .submitTodo()
@@ -38,11 +38,11 @@ describe("TodoMVC BigTest example", () => {
           .submitTodo();
       });
 
-      it("increases the todo count", function() {
+      it("increases the todo count", () => {
         expect(TodoApp.todoCount).to.equal(6);
       });
 
-      it("appends to the list", function() {
+      it("appends to the list", () => {
         expect(TodoApp.todoList(4).todoText).to.equal(
           "Fill in your interactor"
         );
@@ -59,8 +59,23 @@ describe("TodoMVC BigTest example", () => {
             .pressEnter();
         });
 
-        it("properly edits the todo item", function() {
+        it("properly edits the todo item", () => {
           expect(TodoApp.todoList(5).todoText).to.equal("Write tests");
+        });
+
+        describe("viewing all Todos", () => {
+          beforeEach(async () => {
+            await TodoApp.clickFilter("All");
+          });
+
+          it("selects the right filter", () => {
+            expect(TodoApp.activeFilter).to.equal("All");
+          });
+
+          it("has the correct number of todos", () => {
+            expect(TodoApp.todoCount).to.equal(12);
+            expect(TodoApp.completedCount).to.equal(6);
+          });
         });
       });
     });
