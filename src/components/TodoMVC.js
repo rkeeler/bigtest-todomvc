@@ -4,6 +4,7 @@ import React, { PureComponent } from "react";
 
 import TodoMVC from "../models/TodoMVC";
 import TodoTextInput from "./TodoTextInput";
+import "../style.css";
 
 const pluralize = (word, count) => (count === 1 ? word : `${word}s`);
 
