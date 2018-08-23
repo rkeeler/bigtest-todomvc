@@ -1,7 +1,7 @@
 import { API_URL } from "../../src/api";
 
 export default function configure() {
-  this.timing = 50;
+  this.timing = 5;
   this.urlPrefix = API_URL;
 
   this.get("/", ({ todos }, request) => {
